@@ -5,7 +5,7 @@ module Stonez
     attr_accessor :codigo_autorizacao, :codigo_resposta, :resposta, :capturada
 
     def params_to_xml
-      Stone::XmlParser.authorisation_request(@params)
+      Stonez::XmlParser.authorisation_request(@params)
     end
 
     def request_path
