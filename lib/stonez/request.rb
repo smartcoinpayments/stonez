@@ -15,12 +15,12 @@ module Stonez
       xml = params_to_xml
       puts xml
 
-      req = Net::HTTP::Post.new(ROOT_PATH + request_path)
+      req = Net::HTTP::Post.new(Stonez.configuration.root_path + request_path)
 
       req.content_type = 'text/xml'
       req.body = xml
 
-      res = Net::HTTP.start(Stonez::HOSTNAME, Stonez::PORT, use_ssl: Stonez::USE_SSL,
+      res = Net::HTTP.start(Stonez.configuration.hostname, Stonez.configuration.port, use_ssl: Stonez.configuration.use_ssl,
                             verify_mode: OpenSSL::SSL::VERIFY_NONE) do |https|
         https.request(req)
       end

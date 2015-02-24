@@ -10,3 +10,18 @@ require 'stonez/transaction_status'
 require 'stonez/authorisation'
 require 'stonez/completion'
 require 'stonez/reversal'
+require 'stonez/configuration'
+
+module Stonez
+  class << self
+    attr_accessor :configuration
+
+    def configure
+      yield(configuration)
+    end
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+  end
+end

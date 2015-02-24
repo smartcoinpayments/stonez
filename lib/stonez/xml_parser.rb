@@ -79,7 +79,7 @@ module Stonez
               xml.Envt do
                 xml.Mrchnt do
                   xml.Id do
-                    xml.Id        Stonez::MERCHANT_ID
+                    xml.Id        Stonez.configuration.merchant_id
                     xml.ShortName params[:short_name]
                   end
                 end
@@ -151,7 +151,7 @@ module Stonez
               xml.Envt do
                 xml.Mrchnt do
                   xml.Id do
-                    xml.Id       Stonez::MERCHANT_ID
+                    xml.Id       Stonez.configuration.merchant_id
                   end
                 end
               end
@@ -198,7 +198,7 @@ module Stonez
               xml.Envt do
                 xml.Mrchnt do
                   xml.Id do
-                    xml.Id   Stonez::MERCHANT_ID
+                    xml.Id   Stonez.configuration.merchant_id
                   end
                 end
               end
