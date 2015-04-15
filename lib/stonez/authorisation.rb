@@ -23,8 +23,7 @@ module Stonez
     end
 
     def autorizada?
-      # TODO: tratar "PART"
-      @resposta == "APPR" && !@capturada
+      @resposta == "APPR"
     end
 
     def capturada?
