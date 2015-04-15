@@ -31,7 +31,7 @@ describe 'Create and Configure Stonez' do
       config.use_ssl     = params[:use_ssl]
     end
 
-    tx_param ={cardholder_name: 'Arthur C Granado', pan: '4242424242424242', expiration_date: '2021-10', cvv: '081', parcelas: 1,
+    tx_param ={cardholder_name: 'Arthur C Granado', pan: '4066559900000000', expiration_date: '2021-10', cvv: '081', parcelas: 1,
                short_name: 'Smartcoin' ,transaction_id: Random.rand(1000000).to_s, transaction_ref: SecureRandom.hex(7),
                total_amount: 1000, capture: true, transaction_dtime: Time.now.strftime("%Y-%m-%dT%H:%M:%S")}
 
