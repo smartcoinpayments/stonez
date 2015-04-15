@@ -13,7 +13,6 @@ module Stonez
 
     def submit
       xml = params_to_xml
-      puts xml
 
       req = Net::HTTP::Post.new(Stonez.configuration.root_path + request_path)
 
@@ -47,7 +46,6 @@ module Stonez
       end
 
       params = Stonez::XmlParser.parse_response xml
-      puts xml.inspect
 
       if params.nil?
         @mensagem  = "Erro de servidor ou conexão."
