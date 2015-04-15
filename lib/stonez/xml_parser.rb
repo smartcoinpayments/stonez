@@ -80,14 +80,14 @@ module Stonez
                 xml.Mrchnt do
                   xml.Id do
                     xml.Id        Stonez.configuration.merchant_id
-                    xml.ShortName params[:short_name]
+                    xml.ShrtNm params[:short_name]
                   end
                 end
                 xml.Card do
                   xml.PlainCardData do
                     xml.PAN    params[:pan]
                     xml.XpryDt params[:expiration_date]
-                    if params[:cvv].present? and false
+                    if params[:cvv].present?
                       xml.CardSctyCd do
                         xml.CSCVal params[:cvv]
                       end

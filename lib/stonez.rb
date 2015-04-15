@@ -3,6 +3,9 @@
 #require 'active_support/core_ext/module/attribute_accessors'
 #require 'active_model'
 require 'nokogiri'
+require 'net/http'
+require 'openssl'
+require 'active_support/all'
 
 require 'stonez/request'
 require 'stonez/xml_parser'
