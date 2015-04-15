@@ -1,6 +1,11 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'stonez/version'
+
 Gem::Specification.new do |s|
   s.name        = 'stonez'
-  s.version     = '0.0.1'
+  s.version     = Stonez::VERSION
   s.date        = '2014-12-13'
   s.summary     = "Stone Credit Authentication SDK"
   s.description = "Gem for using the Stone API for credit authorization"
