@@ -4,15 +4,18 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'stonez/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'stonez'
-  s.version     = Stonez::VERSION
-  s.date        = '2014-12-13'
-  s.summary     = "Stone Credit Authentication SDK"
-  s.description = "Gem for using the Stone API for credit authorization"
-  s.authors     = ["Timothy High"]
-  s.email       = 'tech@pagpop.com.br'
-  s.files       = Dir['lib/*.rb']
-  s.homepage    = "https://github.com/techvitalcred/stonez"
+  s.name          = 'stonez'
+  s.version       = Stonez::VERSION
+  s.date          = '2014-12-13'
+  s.summary       = "Stone Credit Authentication SDK"
+  s.description   = "Gem for using the Stone API for credit authorization"
+  s.authors       = ["Timothy High"]
+  s.email         = 'tech@pagpop.com.br'
+  s.files         = `git ls-files`.split($/)
+  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
+  s.require_paths = ["lib"]
+  s.homepage      = "https://github.com/techvitalcred/stonez"
 
   s.add_dependency "nokogiri"
   s.add_dependency "activesupport"
