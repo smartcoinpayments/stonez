@@ -91,8 +91,9 @@ describe 'Create and Configure Stonez' do
   end
 
   context 'Refund' do
+    let(:transaction_id) {SecureRandom.hex(7)}
     let(:tx_param) { {cardholder_name: 'Luke Skywalker', pan: '4066559900000000', expiration_date: '2021-10', cvv: '081', parcelas: 1,
-                         short_name: 'Smartcoin' ,transaction_id: Random.rand(1000000).to_s, transaction_ref: SecureRandom.hex(7),
+                         short_name: 'Smartcoin' ,transaction_id: transaction_id, transaction_ref: "Ref-#{Random.rand(1000000)}",
                          total_amount: 1000, capture: true, transaction_dtime: Time.now.strftime("%Y-%m-%dT%H:%M:%S")} }
     let(:transaction) { Stonez::Authorisation.new(tx_param) }
 
@@ -104,8 +105,8 @@ describe 'Create and Configure Stonez' do
       expect(transaction.autorizada?).to be_truthy
       expect(transaction.capturada?).to be_truthy
 
-      refund_params = {id_stone: transaction.id, total_amount: tx_param[:total_amount] }
-      refund_transaction = Stonez::Reversal.new(refund_params)
+      refund_params = {id_stone: transaction.id, transaction_id: transaction_id, total_amount: tx_param[:total_amount], transaction_dtime: Time.now.strftime("%Y-%m-%dT%H:%M:%S") }
+      refund_transaction = Stonez::Cancellation.new(refund_params)
       refund_transaction.submit
 
       expect(refund_transaction.success?).to be_truthy
@@ -115,8 +116,8 @@ describe 'Create and Configure Stonez' do
       expect(transaction.autorizada?).to be_truthy
       expect(transaction.capturada?).to be_truthy
 
-      refund_params = {id_stone: transaction.id, total_amount: tx_param[:total_amount]/2 }
-      refund_transaction = Stonez::Reversal.new(refund_params)
+      refund_params = {id_stone: transaction.id, transaction_id: transaction_id, total_amount: tx_param[:total_amount]/2, transaction_dtime: Time.now.strftime("%Y-%m-%dT%H:%M:%S") }
+      refund_transaction = Stonez::Cancellation.new(refund_params)
       refund_transaction.submit
 
       expect(refund_transaction.success?).to be_truthy

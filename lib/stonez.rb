@@ -13,6 +13,7 @@ require 'stonez/transaction_status'
 require 'stonez/authorisation'
 require 'stonez/completion'
 require 'stonez/reversal'
+require 'stonez/cancellation'
 require 'stonez/configuration'
 
 module Stonez
