@@ -12,6 +12,8 @@ module Stonez
         parse_completion_response xml
       when "AcceptorTransactionStatusReportResponse"
         parse_transaction_status_response xml
+      when "AcceptorCancellationResponse"
+        parse_cancellation_response xml
       end
     end
 
@@ -40,6 +42,15 @@ module Stonez
         codigo_resposta:    doc.css('RspnRsn').try(:text),
         resposta:           doc.css('Rspn').try(:text),
         capturada:          doc.css('CmpltnReqrd').try(:text) != "true",
+      }
+    end
+
+    def self.parse_cancellation_response(xml)
+      doc = Nokogiri::XML(xml, nil, 'UTF-8')
+      {
+        transaction_ref:  doc.css('TxRef').try(:text),
+        funcao:           doc.css('MsgFctn').try(:text),
+        resposta:         doc.css('Rspn').try(:text),
       }
     end
 
@@ -128,6 +139,47 @@ module Stonez
         end
       end
 
+      builder.to_xml
+    end
+
+    def self.cancellation_request(params)
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml.Document(xmlns: "urn:AcceptorCancellationRequestV02.1") do
+          xml.AccptrCxlReq do
+            xml.Hdr do
+              xml.MsgFctn "CCAQ"
+              xml.PrtcolVrsn "2.0"
+            end
+            xml.CxlReq do
+              xml.Envt do
+                xml.Mrchnt do
+                  xml.Id do
+                    xml.Id Stonez.configuration.merchant_id
+                  end
+                end
+              end
+              xml.Tx do
+                xml.TxCaptr true
+                xml.TxId do
+                  xml.TxDtTm     params[:transaction_dtime]
+                  xml.TxRef      params[:transaction_ref]
+                end
+                xml.TxDtls do
+                  xml.Ccy "986"
+                  xml.TtlAmt params[:total_amount]
+                end
+                xml.OrgnlTx do
+                  if params[:transaction_id].present?
+                    xml.InitrTxId  params[:transaction_id]
+                  else
+                    xml.RcptTxId   params[:id_stone]
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
       builder.to_xml
     end
 
@@ -243,6 +295,7 @@ module Stonez
        "AcceptorCancellationRequest",
        "AcceptorCancellationResponse",
        "AcceptorCancellationAdvice",
+       "AcceptorCancellationResponse",
        "AcceptorCancellationAdviceResponse",
        "AcceptorTransactionStatusReportRequest",
        "AcceptorTransactionStatusReportResponse",
